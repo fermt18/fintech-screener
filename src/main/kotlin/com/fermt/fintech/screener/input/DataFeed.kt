@@ -14,7 +14,19 @@ class DataFeed(val tl: List<String>) {
 
     private fun fetchStock(t: String): Stock {
         return Stock(
-            ticker = t
+            ticker = t,
+            sector = "",
+            marketCap = 1L,
+            ev = 1L,
+            currentRatio = 1.0,
+            debtToEquity = 1.0,
+            roa = 1.0,
+            roe = 1.0,
+            roic = 1.0,
+            pe = 1.0,
+            evebit = 1.0,
+            evfcff = 1.0,
+            iv = 1.0
         )
     }
 }
