@@ -24,4 +24,9 @@ class TestDataFeed {
     fun testDataFeed_Ticker(){
         assertEquals("MSFT", stockList[0].ticker)
     }
+
+    @Test
+    fun testDataFeed_MarketCap(){
+        assertEquals(1L, stockList[0].marketCap)
+    }
 }
