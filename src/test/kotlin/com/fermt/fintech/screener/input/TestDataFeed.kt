@@ -26,7 +26,17 @@ class TestDataFeed {
     }
 
     @Test
+    fun testDataFeed_Sector(){
+        assertEquals("Digital Ads", stockList[0].sector)
+    }
+
+    @Test
     fun testDataFeed_MarketCap(){
         assertEquals(1L, stockList[0].marketCap)
+    }
+
+    @Test
+    fun testDataFeed_EV(){
+        assertEquals(1L, stockList[0].ev)
     }
 }
