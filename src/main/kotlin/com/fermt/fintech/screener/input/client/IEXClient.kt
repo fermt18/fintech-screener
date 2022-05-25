@@ -1,5 +1,7 @@
 package com.fermt.fintech.screener.input.client
 
+import com.fermt.fintech.screener.engine.Operations
+
 class IEXClient: ClientInt {
 
     override fun getSector(ticker: String): String {
@@ -47,6 +49,6 @@ class IEXClient: ClientInt {
     }
 
     override fun getIV(ticker: String): Double {
-        return 1.0
+        return Operations().calcDFCFF()
     }
 }

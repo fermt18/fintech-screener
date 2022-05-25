@@ -13,7 +13,7 @@ class TestDCF {
     // discountRate: Expected rate of return due to inflation and cost of opportunity, typically = wacc
     // At bare minimum discountRate = inflationRate and growthRate = discountRate
 
-    val dcf = DCF()
+    val dcf = Operations()
 
     @Test
     fun test_dcf_at_year(){
