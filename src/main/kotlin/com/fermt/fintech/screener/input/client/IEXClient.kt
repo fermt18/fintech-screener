@@ -1,6 +1,7 @@
 package com.fermt.fintech.screener.input.client
 
 import com.fermt.fintech.screener.engine.Operations
+import kotlin.math.pow
 
 class IEXClient: ClientInt {
 
@@ -49,6 +50,17 @@ class IEXClient: ClientInt {
     }
 
     override fun getIV(ticker: String): Double {
-        return Operations().calcDFCFF()
+        val ebitAfterTax = 10.0
+        val growthRate = 0.15
+        val reinvestmentRate = 0.5
+        val discountRate = 0.09
+        val years = 10
+        val cf = ebitAfterTax * (1 + growthRate).pow(years)
+        val growthRateTerminal = 0.02
+        val reinvestmentRateTerminal = 0.2
+        val discountRateTerminal = 0.3
+        return Operations().calcDFCFF(
+            ebitAfterTax, growthRate, reinvestmentRate, discountRate, years,
+            cf, growthRateTerminal, reinvestmentRateTerminal, discountRateTerminal)
     }
 }

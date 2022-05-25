@@ -12,18 +12,16 @@ class Operations {
     }
 
     // DCF -------------------
-    fun calcDFCFF(): Double {
-        val ebitAfterTax = 10.0
-        val growthRate = 0.15
-        val reinvestmentRate = 0.5
-        val discountRate = 0.09
-        val years = 10
+    fun calcDFCFF(ebitAfterTax: Double,
+                  growthRate: Double,
+                  reinvestmentRate: Double,
+                  discountRate: Double,
+                  years: Int,
+                  cf: Double,
+                  growthRateTerminal: Double,
+                  reinvestmentRateTerminal: Double,
+                  discountRateTerminal: Double): Double {
         val dcfPeriod = dfcff(ebitAfterTax, growthRate, reinvestmentRate, discountRate, years)
-
-        val cf = ebitAfterTax * (1 + growthRate).pow(years)
-        val growthRateTerminal = 0.02
-        val reinvestmentRateTerminal = 0.2
-        val discountRateTerminal = 0.3
         val dcfTerminal = dfcffAtTerminal(cf, growthRateTerminal, reinvestmentRateTerminal, discountRate, discountRateTerminal, years)
         return dcfPeriod + dcfTerminal
     }
