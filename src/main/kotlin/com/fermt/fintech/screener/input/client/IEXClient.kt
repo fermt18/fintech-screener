@@ -63,4 +63,12 @@ class IEXClient: ClientInt {
             ebitAfterTax, growthRate, reinvestmentRate, discountRate, years,
             cf, growthRateTerminal, reinvestmentRateTerminal, discountRateTerminal)
     }
+
+    private fun getEBIT(ticker: String, period: String): Double {
+        return 15.0
+    }
+
+    private fun getTaxRate(ticker: String, period: String): Double {
+        return 0.35
+    }
 }

@@ -30,3 +30,12 @@ For a specific stock, creates a CSV with the following fields:
 6. Historic FCF/S
 
 ## Use Case 3, momentum
+
+## Use Case 4, macro trends
+1. Consumer Confidence (OCDE)
+2. Leading Index (OCDE)
+3. NFIB Small Business
+4. PMI Index
+5. National Financial Condition Index (NFCI)
+6. Inflation (transport, commodities, financial assets) vs Growth
+7. Forecast (yeld curve)
