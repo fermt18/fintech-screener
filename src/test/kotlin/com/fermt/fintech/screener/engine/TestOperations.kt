@@ -13,38 +13,36 @@ class TestOperations {
     // discountRate: Expected rate of return due to inflation and cost of opportunity, typically = wacc
     // At bare minimum discountRate = inflationRate and growthRate = discountRate
 
-    val dcf = Operations()
-
     @Test
     fun test_dcf_at_year(){
         val cashFlow = 1.0
         val growthRate = 0.08
         val discountRate = 0.08
         val year = 1
-        Assertions.assertEquals(cashFlow, dcf.dcfAtYear(cashFlow * (1 + growthRate), discountRate, year))
+        Assertions.assertEquals(cashFlow, Operations.dcfAtYear(cashFlow * (1 + growthRate), discountRate, year))
     }
 
     @Test
     fun test_dfcff_at_year(){
-        val cashFlow = 1.0
+        val cashFlow = 10L
         val growthRate = 0.08
         val reinvestmentRate = 0.3
         val discountRate = 0.08
         val years = 1
-        val fcffValue = dcf.dfcffAtYear(cashFlow, growthRate, reinvestmentRate, discountRate, years)
+        val fcffValue = Operations.dfcffAtYear(cashFlow, growthRate, reinvestmentRate, discountRate, years)
         Assertions.assertEquals(cashFlow * (1 - reinvestmentRate), fcffValue)
     }
 
     @Test
     fun test_dfcff() {
-        val cashFlow = 3586.20
+        val cashFlow = 358620L
         val growthRate = 0.075
         val reinvestmentRate = 0.32
         val discountRate = 0.087
         val years = 5
         Assertions.assertEquals(
             11795.16,
-            dcf.dfcff(
+            Operations.dfcff(
                 cashFlow,
                 growthRate,
                 reinvestmentRate,
@@ -59,12 +57,12 @@ class TestOperations {
         val cashFlow = 2470.87
         val growthRateTerminal = 0.0379
         val discountRateTerminal = 0.0705
-        Assertions.assertEquals(75793.56, dcf.terminalValue(cashFlow, growthRateTerminal, discountRateTerminal))
+        Assertions.assertEquals(75793.56, Operations.terminalValue(cashFlow, growthRateTerminal, discountRateTerminal))
     }
 
     @Test
     fun test_enterpriseIntrinsicValue() {
-        val cashFlow = 3586.20
+        val cashFlow = 358620L
         val growthRate = 0.075
         val reinvestmentRate = 0.32
         val discountRate = 0.087
@@ -73,7 +71,7 @@ class TestOperations {
         val reinvestmentRateTerminal = 0.5376
         val discountRateTerminal = 0.0705
         Assertions.assertEquals(
-            11795.16, dcf.dfcff(
+            11795.16, Operations.dfcff(
                 cashFlow,
                 growthRate,
                 reinvestmentRate,
@@ -82,7 +80,7 @@ class TestOperations {
             )
         )
         Assertions.assertEquals(
-            49944.18, dcf.dfcffAtTerminal(
+            49944.18, Operations.dfcffAtTerminal(
                 cashFlow * (1 + growthRate).pow(years),
                 growthRateTerminal,
                 reinvestmentRateTerminal,

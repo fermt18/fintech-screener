@@ -4,71 +4,60 @@ import com.fermt.fintech.screener.engine.Operations
 import kotlin.math.pow
 
 class IEXClient: ClientInt {
-
     override fun getSector(ticker: String): String {
-        return "Digital Ads"
+        TODO("Not yet implemented")
     }
 
-    override fun getMarketCap(ticker: String): Long {
-        return 1L
+    override fun getEBIT(ticker: String): Long {
+        TODO("Not yet implemented")
     }
 
-    override fun getEV(ticker: String): Long {
-        return 1L
+    override fun getNetIncome(ticker: String): Long {
+        TODO("Not yet implemented")
     }
 
-    override fun getCurrentRatio(ticker: String): Double {
-        return 1.0
+    override fun getIncomeTax(ticker: String): Long {
+        TODO("Not yet implemented")
     }
 
-    override fun getDebtToEquity(ticker: String): Double {
-        return 1.0
+    override fun getSharesOutstanding(ticker: String): Long {
+        TODO("Not yet implemented")
     }
 
-    override fun getRoA(ticker: String): Double {
-        return 1.0
+    override fun getPrice(ticker: String): Double {
+        TODO("Not yet implemented")
     }
 
-    override fun getRoE(ticker: String): Double {
-        return 1.0
+    override fun getTotalDebt(ticker: String): Long {
+        TODO("Not yet implemented")
     }
 
-    override fun getRoIC(ticker: String): Double {
-        return 1.0
+    override fun getCashAndCashEq(ticker: String): Long {
+        TODO("Not yet implemented")
     }
 
-    override fun getPE(ticker: String): Double {
-        return 1.0
+    override fun getCurrentAssets(ticker: String): Long {
+        TODO("Not yet implemented")
     }
 
-    override fun getEVEBIT(ticker: String): Double {
-        return 1.0
+    override fun getTotalAssets(ticker: String): Long {
+        TODO("Not yet implemented")
     }
 
-    override fun getEVFCFF(ticker: String): Double {
-        return 1.0
+    override fun getCurrentLiabilities(ticker: String): Long {
+        TODO("Not yet implemented")
     }
 
-    override fun getIV(ticker: String): Double {
-        val ebitAfterTax = 10.0
-        val growthRate = 0.15
-        val reinvestmentRate = 0.5
-        val discountRate = 0.09
-        val years = 10
-        val cf = ebitAfterTax * (1 + growthRate).pow(years)
-        val growthRateTerminal = 0.02
-        val reinvestmentRateTerminal = 0.2
-        val discountRateTerminal = 0.3
-        return Operations().calcDFCFF(
-            ebitAfterTax, growthRate, reinvestmentRate, discountRate, years,
-            cf, growthRateTerminal, reinvestmentRateTerminal, discountRateTerminal)
+    override fun getTotalEquity(ticker: String): Long {
+        TODO("Not yet implemented")
     }
 
-    private fun getEBIT(ticker: String, period: String): Double {
-        return 15.0
+    override fun getOpCashFlow(ticker: String): Long {
+        TODO("Not yet implemented")
     }
 
-    private fun getTaxRate(ticker: String, period: String): Double {
-        return 0.35
+    override fun getCapEx(ticker: String): Long {
+        TODO("Not yet implemented")
     }
+
 }
