@@ -1,7 +1,6 @@
 package com.fermt.fintech.screener.output
 
 import com.fermt.fintech.screener.input.DataFeed
-import com.fermt.fintech.screener.input.TickerList
 import com.fermt.fintech.screener.model.Stock
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -14,8 +13,9 @@ class TestCSVFile {
 
     @BeforeEach
     fun init(){
-        val tl = TickerList(this::class.java.classLoader.getResource("tickers/tickerList").toURI())
-        stockList = DataFeed(tl.read()).fetch()
+        val df = DataFeed(this::class.java.classLoader.getResource("tickers/tickerList").toURI())
+        val tl = df.getTickerList()
+        stockList = df.getStockList(tl)
     }
 
     @Test

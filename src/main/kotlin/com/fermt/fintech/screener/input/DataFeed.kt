@@ -3,12 +3,19 @@ package com.fermt.fintech.screener.input
 import com.fermt.fintech.screener.input.client.ClientInt
 import com.fermt.fintech.screener.input.client.IEXClient
 import com.fermt.fintech.screener.model.Stock
+import java.io.File
+import java.net.URI
 
-class DataFeed(val tl: List<String>) {
+class DataFeed(val path: URI) {
 
     val client = IEXClient()
 
-    fun fetch(): List<Stock> {
+
+    fun getTickerList(): List<String> {
+        return File(path).readLines(Charsets.UTF_8)
+    }
+
+    fun getStockList(tl: List<String>): List<Stock> {
         val stockList = ArrayList<Stock>()
         for (t in tl) {
             stockList.add(fetchStock(t))

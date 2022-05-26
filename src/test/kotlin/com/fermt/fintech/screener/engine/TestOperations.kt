@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import kotlin.math.pow
 
-class TestDCF {
+class TestOperations {
 
     // DCF: how much is worth now an investment with a given growthRate having into account a particular discountRate?
     // FCFF = NOPAT - ReinvestmentRate

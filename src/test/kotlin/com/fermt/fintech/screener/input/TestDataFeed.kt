@@ -7,36 +7,50 @@ import org.junit.jupiter.api.Test
 
 class TestDataFeed {
 
-    private lateinit var stockList: List<Stock>
+    private lateinit var tl: List<String>
+    private lateinit var sl: List<Stock>
 
     @BeforeEach
     fun init(){
-        val tl = TickerList(this::class.java.classLoader.getResource("tickers/tickerList").toURI())
-        stockList = DataFeed(tl.read()).fetch()
+        val df = DataFeed(this::class.java.classLoader.getResource("tickers/tickerList").toURI())
+        tl = df.getTickerList()
+        sl = df.getStockList(tl)
     }
 
     @Test
+    fun testInputTickerList(){
+        assertEquals(2, tl.size)
+    }
+
+    @Test
+    fun testContentTickerList(){
+        assertEquals("MSFT", tl[0])
+        assertEquals("GOOG", tl[1])
+    }
+
+
+    @Test
     fun testDataFeed(){
-        assertEquals(2, stockList.size)
+        assertEquals(2, sl.size)
     }
 
     @Test
     fun testDataFeed_Ticker(){
-        assertEquals("MSFT", stockList[0].ticker)
+        assertEquals("MSFT", sl[0].ticker)
     }
 
     @Test
     fun testDataFeed_Sector(){
-        assertEquals("Digital Ads", stockList[0].sector)
+        assertEquals("Digital Ads", sl[0].sector)
     }
 
     @Test
     fun testDataFeed_MarketCap(){
-        assertEquals(1L, stockList[0].marketCap)
+        assertEquals(1L, sl[0].marketCap)
     }
 
     @Test
     fun testDataFeed_EV(){
-        assertEquals(1L, stockList[0].ev)
+        assertEquals(1L, sl[0].ev)
     }
 }
