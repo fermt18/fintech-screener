@@ -5,59 +5,59 @@ import kotlin.math.pow
 
 class IEXClient: ClientInt {
     override fun getSector(ticker: String): String {
-        TODO("Not yet implemented")
+        return "Digital Ads"
     }
 
     override fun getEBIT(ticker: String): Long {
-        TODO("Not yet implemented")
+        return 100L
     }
 
     override fun getNetIncome(ticker: String): Long {
-        TODO("Not yet implemented")
+        return 10L
     }
 
     override fun getIncomeTax(ticker: String): Long {
-        TODO("Not yet implemented")
+        return 35L
     }
 
     override fun getSharesOutstanding(ticker: String): Long {
-        TODO("Not yet implemented")
+        return 3500000L
     }
 
     override fun getPrice(ticker: String): Double {
-        TODO("Not yet implemented")
+        return 5.27
     }
 
     override fun getTotalDebt(ticker: String): Long {
-        TODO("Not yet implemented")
+        return 27L
     }
 
     override fun getCashAndCashEq(ticker: String): Long {
-        TODO("Not yet implemented")
+        return 3L
     }
 
     override fun getCurrentAssets(ticker: String): Long {
-        TODO("Not yet implemented")
+        return 185L
     }
 
     override fun getTotalAssets(ticker: String): Long {
-        TODO("Not yet implemented")
+        return 1850L
     }
 
     override fun getCurrentLiabilities(ticker: String): Long {
-        TODO("Not yet implemented")
+        return 15L
     }
 
     override fun getTotalEquity(ticker: String): Long {
-        TODO("Not yet implemented")
+        return 5L
     }
 
     override fun getOpCashFlow(ticker: String): Long {
-        TODO("Not yet implemented")
+        return 8L
     }
 
     override fun getCapEx(ticker: String): Long {
-        TODO("Not yet implemented")
+        return 2L
     }
 
 }
