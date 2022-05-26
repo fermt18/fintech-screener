@@ -22,7 +22,20 @@ class CSVFile(private val stockList: List<Stock>) {
         b.setHeader(Headers::class.java)
         val p = CSVPrinter(out, b.build())
         for(stock in stockList){
-            p.printRecord(stock.ticker)
+            p.printRecord(
+                stock.ticker,
+                stock.sector,
+                stock.marketCap,
+                stock.ev,
+                stock.currentRatio,
+                stock.debtToEquity,
+                stock.roa,
+                stock.roe,
+                stock.roic,
+                stock.pe,
+                stock.evebit,
+                stock.evfcff,
+                stock.iv)
         }
         p.flush()
         p.close()
