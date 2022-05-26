@@ -1,11 +1,28 @@
 package com.fermt.fintech.screener.input.client
 
-import com.fermt.fintech.screener.engine.Operations
-import kotlin.math.pow
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+
 
 class IEXClient: ClientInt {
+
+    val client = HttpClient(CIO)
+
     override fun getSector(ticker: String): String {
-        return "Digital Ads"
+        val url = "GET /stock/{symbol}/company"
+        val resp: HttpResponse
+        runBlocking {
+            resp = sendRequest(url)
+        }
+        return resp.toString()
+    }
+
+    suspend fun sendRequest(url: String): HttpResponse{
+        return client.get(url)
     }
 
     override fun getEBIT(ticker: String): Long {

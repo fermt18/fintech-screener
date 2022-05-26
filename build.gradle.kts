@@ -13,6 +13,8 @@ repositories {
 
 dependencies {
     implementation("org.apache.commons", "commons-csv", "1.9.0")
+    implementation("io.ktor:ktor-server-core:2.0.1")
+    implementation("io.ktor:ktor-client-cio:2.0.1")
     testImplementation(kotlin("test"))
 }
 
