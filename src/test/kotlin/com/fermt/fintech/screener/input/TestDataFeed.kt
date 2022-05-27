@@ -38,19 +38,4 @@ class TestDataFeed {
     fun testDataFeed_Ticker(){
         assertEquals("MSFT", sl[0].ticker)
     }
-
-    @Test
-    fun testDataFeed_Sector(){
-        assertEquals("Digital Ads", sl[0].sector)
-    }
-
-    @Test
-    fun testDataFeed_MarketCap(){
-        assertEquals(1L, sl[0].marketCap)
-    }
-
-    @Test
-    fun testDataFeed_EV(){
-        assertEquals(1L, sl[0].ev)
-    }
 }
