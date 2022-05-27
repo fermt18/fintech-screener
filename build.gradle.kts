@@ -17,6 +17,7 @@ dependencies {
     implementation("io.ktor:ktor-server-core:2.0.1")
     implementation("io.ktor:ktor-client-cio:2.0.1")
     testImplementation(kotlin("test"))
+    testImplementation("io.ktor:ktor-client-mock:2.0.1")
 }
 
 tasks.test {
