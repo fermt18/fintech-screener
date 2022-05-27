@@ -14,8 +14,8 @@ import java.io.File
 
 class IEXClient: ClientInt {
 
-    val client = HttpClient(CIO)
-    lateinit var token: String
+    private val client = HttpClient(CIO)
+    private val token: String
 
     init {
         val configPars = File("${System.getProperty("user.dir")}${File.separator}config.cfg").readLines()
@@ -29,18 +29,18 @@ class IEXClient: ClientInt {
     }
 
     override fun getSector(ticker: String): String {
-        val baseUrl = "https://sandbox.iexapis.com/stable"
-        val url = "$baseUrl/stock/$ticker/company"
+        val endpoint = "/stock/$ticker/company"
         val resp: String
         runBlocking {
-            resp = sendRequest(url)
+            resp = sendRequest(endpoint)
         }
         val jo = JSONObject(resp)
         return jo.get("sector").toString()
     }
 
-    private suspend fun sendRequest(url: String): String{
-        val resp: HttpResponse = client.get(url) {
+    private suspend fun sendRequest(endpoint: String): String{
+        val baseUrl = "https://sandbox.iexapis.com/stable"
+        val resp: HttpResponse = client.get("$baseUrl$endpoint") {
             parameter("token", token)
         }
         if(resp.status != HttpStatusCode.OK)
