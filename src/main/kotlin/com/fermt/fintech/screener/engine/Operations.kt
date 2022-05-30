@@ -9,55 +9,55 @@ class Operations {
 
     companion object {
         fun calcMarketCap(price: Double, sharesOutstanding: Long): Long {
-            return 1L
+            return (price * sharesOutstanding).toLong()
         }
 
         fun calcEV(marketCap: Long, totalDebt: Long, cashAndCashEq: Long): Long {
-            return 1L
+            return marketCap + totalDebt - cashAndCashEq
         }
 
         fun calcFCF(opCashFlow: Long, capEx: Long): Long {
-            return 1L
+            return opCashFlow - capEx
         }
 
         fun calcCurrentRatio(currentAssets: Long, currentLiabilities: Long): Double {
-            return 0.1
+            return roundToNDecimals(currentAssets.toDouble() / currentLiabilities.toDouble())
         }
 
         fun calcDebtToEquity(totalDebt: Long, totalEquity: Long): Double {
-            return 0.1
+            return roundToNDecimals(totalDebt.toDouble() / totalEquity.toDouble())
         }
 
         fun calcRoA(netIncome: Long, totalAssets: Long): Double {
-            return 0.1
+            return roundToNDecimals(netIncome.toDouble() / totalAssets.toDouble())
         }
 
         fun calcRoE(netIncome: Long, totalEquity: Long): Double {
-            return 0.1
+            return roundToNDecimals(netIncome.toDouble() / totalEquity.toDouble())
         }
 
         fun calcRoIC(ebit: Long, totalAssets: Long, currentLiabilities: Long): Double {
-            return 0.1
+            return roundToNDecimals(ebit.toDouble() / (totalAssets.toDouble() + currentLiabilities.toDouble()))
         }
 
         fun calcPE(price: Double, netIncome: Long): Double {
-            return 0.1
+            return roundToNDecimals(price / netIncome.toDouble())
         }
 
         fun calcEVEBIT(ev: Long, ebit: Long): Double {
-            return 0.1
+            return roundToNDecimals(ev.toDouble() / ebit.toDouble())
         }
 
         fun calcEVFCFF(ev: Long, fcff: Long): Double {
-            return 0.1
+            return roundToNDecimals(ev.toDouble() / fcff.toDouble())
         }
 
         fun calcTaxRate(netIncome: Long, incomeTax: Long): Double {
-            return 0.1
+            return roundToNDecimals(incomeTax.toDouble() / netIncome.toDouble())
         }
 
         fun calcNOPAT(ebit: Long, taxRate: Double): Long {
-            return 1L
+            return (ebit.toDouble() * (1 - taxRate)).toLong()
         }
 
         // DCF -------------------
@@ -81,7 +81,7 @@ class Operations {
                 discountRateTerminal,
                 years
             )
-            return dcfPeriod + dcfTerminal
+            return roundToNDecimals(dcfPeriod + dcfTerminal)
         }
 
         fun dcfAtYear(cashFlow: Double, discountRate: Double, year: Int): Double {

@@ -23,6 +23,8 @@ class IEXClient: ClientInt {
     private lateinit var company: JSONObject
     private lateinit var stats: JSONObject
     private lateinit var incomeStatement: JSONObject
+    private lateinit var balanceSheet: JSONObject
+    private lateinit var cashFlow: JSONObject
 
 
     init {
@@ -42,6 +44,8 @@ class IEXClient: ClientInt {
             company = sendRequest("/stock/$ticker/company")
             stats = sendRequest("/stock/$ticker/stats")
             incomeStatement = sendRequest("/stock/$ticker/income").getJSONArray("income").get(0) as JSONObject
+            balanceSheet = sendRequest("/stock/$ticker/balance-sheet").getJSONArray("balancesheet").get(0) as JSONObject
+            cashFlow = sendRequest("/stock/$ticker/cash-flow").getJSONArray("cashflow").get(0) as JSONObject
         }
     }
 
@@ -66,39 +70,40 @@ class IEXClient: ClientInt {
     }
 
     override fun getPrice(): Double {
-        return 5.27
+        return priceOnly
     }
 
     override fun getTotalDebt(): Long {
-        return 27L
+        return balanceSheet.getLong("currentLongTermDebt") +
+                balanceSheet.getLong("longTermDebt")
     }
 
     override fun getCashAndCashEq(): Long {
-        return 3L
+        return balanceSheet.getLong("currentCash")
     }
 
     override fun getCurrentAssets(): Long {
-        return 185L
+        return balanceSheet.getLong("currentAssets")
     }
 
     override fun getTotalAssets(): Long {
-        return 1850L
+        return balanceSheet.getLong("totalAssets")
     }
 
     override fun getCurrentLiabilities(): Long {
-        return 15L
+        return balanceSheet.getLong("totalCurrentLiabilities")
     }
 
     override fun getTotalEquity(): Long {
-        return 5L
+        return balanceSheet.getLong("shareholderEquity")
     }
 
     override fun getOpCashFlow(): Long {
-        return 8L
+        return cashFlow.getLong("cashFlow")
     }
 
     override fun getCapEx(): Long {
-        return 2L
+        return cashFlow.getLong("capitalExpenditures")
     }
 
     private suspend fun sendRequest(endpoint: String): JSONObject {
