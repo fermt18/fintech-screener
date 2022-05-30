@@ -25,6 +25,7 @@ class DataFeed(val path: URI) {
     }
 
     private fun fetchStock(t: String): Stock {
+        client.update(t)
         val sector = client.getSector(t)
         val ebit = client.getEBIT(t)
         val netIncome = client.getNetIncome(t)

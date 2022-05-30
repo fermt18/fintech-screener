@@ -8,6 +8,8 @@ import io.ktor.client.statement.*
 import io.ktor.http.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 import java.io.File
 
@@ -16,6 +18,9 @@ class IEXClient: ClientInt {
 
     private val client = HttpClient(CIO)
     private val token: String
+    private lateinit var company: JSONObject
+    private lateinit var incomeStatement: JSONObject
+
 
     init {
         val configPars = File("${System.getProperty("user.dir")}${File.separator}config.cfg").readLines()
@@ -28,32 +33,23 @@ class IEXClient: ClientInt {
         }
     }
 
-    override fun getSector(ticker: String): String {
-        val endpoint = "/stock/$ticker/company"
-        val resp: String
+    fun update(ticker: String){
         runBlocking {
-            resp = sendRequest(endpoint)
+            company = sendRequest("/stock/$ticker/company")
+            incomeStatement = sendRequest("/stock/$ticker/income").getJSONArray("income").get(0) as JSONObject
         }
-        val jo = JSONObject(resp)
-        return jo.get("sector").toString()
     }
 
-    private suspend fun sendRequest(endpoint: String): String{
-        val baseUrl = "https://sandbox.iexapis.com/stable"
-        val resp: HttpResponse = client.get("$baseUrl$endpoint") {
-            parameter("token", token)
-        }
-        if(resp.status != HttpStatusCode.OK)
-            println("HTTP with unexpected response: ${resp.status}")
-        return resp.body()
+    override fun getSector(ticker: String): String {
+        return company.get("sector").toString()
     }
 
     override fun getEBIT(ticker: String): Long {
-        return 100L
+        return incomeStatement.getLong("ebit")
     }
 
     override fun getNetIncome(ticker: String): Long {
-        return 10L
+        return incomeStatement.getLong("netIncome")
     }
 
     override fun getIncomeTax(ticker: String): Long {
@@ -100,4 +96,13 @@ class IEXClient: ClientInt {
         return 2L
     }
 
+    private suspend fun sendRequest(endpoint: String): JSONObject{
+        val baseUrl = "https://sandbox.iexapis.com/stable"
+        val resp: HttpResponse = client.get("$baseUrl$endpoint") {
+            parameter("token", token)
+        }
+        if(resp.status != HttpStatusCode.OK)
+            println("HTTP with unexpected response: ${resp.status}")
+        return JSONObject(resp.body() as String)
+    }
 }

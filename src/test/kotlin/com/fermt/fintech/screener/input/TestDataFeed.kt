@@ -25,7 +25,7 @@ class TestDataFeed {
     @Test
     fun testContentTickerList(){
         assertEquals("MSFT", tl[0])
-        assertEquals("GOOG", tl[1])
+        assertEquals("GOOGL", tl[1])
     }
 
 
