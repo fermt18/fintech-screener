@@ -2,7 +2,7 @@ package com.fermt.fintech.screener.input.client
 
 interface ClientInt {
 
-    fun update(ticker: String)
+    fun update(ticker: String): Boolean
     fun getSector(): String
     fun getEBIT(): Long
     fun getNetIncome(): Long

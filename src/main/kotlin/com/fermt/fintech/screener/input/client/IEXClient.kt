@@ -19,6 +19,7 @@ class IEXClient: ClientInt {
 
     private val client = HttpClient(CIO)
     private val token: String
+    private val baseUrl: String
     private var priceOnly by Delegates.notNull<Double>()
     private lateinit var company: JSONObject
     private lateinit var stats: JSONObject
@@ -32,21 +33,34 @@ class IEXClient: ClientInt {
             .map { s -> s.replace(" ", "") }
         if(configPars.filter { s -> s.startsWith("environment") }.first().split("=")[1].equals("dev")){
             token = configPars.filter { s -> s.startsWith("dev_token") }.first().split("=")[1]
+            baseUrl = "https://sandbox.iexapis.com/stable"
         }
         else{
             token = configPars.filter { s -> s.startsWith("pro_token") }.first().split("=")[1]
+            baseUrl = "https://cloud.iexapis.com/stable"
         }
     }
 
-    override fun update(ticker: String){
+    override fun update(ticker: String): Boolean {
+        var r = true
         runBlocking {
-            priceOnly = getPrice(ticker).toDouble()
-            company = sendRequest("/stock/$ticker/company")
-            stats = sendRequest("/stock/$ticker/stats")
-            incomeStatement = sendRequest("/stock/$ticker/income").getJSONArray("income").get(0) as JSONObject
-            balanceSheet = sendRequest("/stock/$ticker/balance-sheet").getJSONArray("balancesheet").get(0) as JSONObject
-            cashFlow = sendRequest("/stock/$ticker/cash-flow").getJSONArray("cashflow").get(0) as JSONObject
+            priceOnly = getPrice(ticker).toDouble()                                  //    1/call
+            company = sendRequest("/stock/$ticker/company")                  //   10/symbol
+            stats = sendRequest("/stock/$ticker/stats")                      //    5/symbol, full stats; 1/symbol, single stat
+            val iSt = sendRequestWithPeriod("/stock/$ticker/income", "annual", "1")
+            if(iSt.isEmpty){
+                incomeStatement = JSONObject()
+                balanceSheet = JSONObject()
+                cashFlow = JSONObject()
+                r = false
+                return@runBlocking
+            }
+            incomeStatement = iSt.getJSONArray("income").get(0) as JSONObject            // 1000/symbol/period
+            balanceSheet = sendRequestWithPeriod("/stock/$ticker/balance-sheet", "annual", "1").getJSONArray("balancesheet").get(0) as JSONObject  // 3000/symbol/period
+            cashFlow = sendRequestWithPeriod("/stock/$ticker/cash-flow", "annual", "1").getJSONArray("cashflow").get(0) as JSONObject              // 1000/symbol/period
         }
+        return r
+        // 5016/symbol/period
     }
 
     override fun getSector(): String {
@@ -107,7 +121,6 @@ class IEXClient: ClientInt {
     }
 
     private suspend fun sendRequest(endpoint: String): JSONObject {
-        val baseUrl = "https://sandbox.iexapis.com/stable"
         val resp: HttpResponse = client.get("$baseUrl$endpoint") {
             parameter("token", token)
         }
@@ -116,8 +129,19 @@ class IEXClient: ClientInt {
         return JSONObject(resp.body() as String)
     }
 
+
+    private suspend fun sendRequestWithPeriod(endpoint: String, period: String, last: String): JSONObject {
+        val resp: HttpResponse = client.get("$baseUrl$endpoint") {
+            parameter("token", token)
+            parameter("period", period)
+            parameter("last", last)
+        }
+        if(resp.status != HttpStatusCode.OK)
+            println("HTTP with unexpected response: ${resp.status}")
+        return JSONObject(resp.body() as String)
+    }
+
     private suspend fun getPrice(ticker: String): String {
-        val baseUrl = "https://sandbox.iexapis.com/stable"
         val endpoint = "/stock/$ticker/price"
         val resp: HttpResponse = client.get("$baseUrl$endpoint") {
             parameter("token", token)

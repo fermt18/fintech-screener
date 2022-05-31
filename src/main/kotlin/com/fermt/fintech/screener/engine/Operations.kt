@@ -21,38 +21,47 @@ class Operations {
         }
 
         fun calcCurrentRatio(currentAssets: Long, currentLiabilities: Long): Double {
+            if(currentLiabilities == 0L) return Double.POSITIVE_INFINITY
             return roundToNDecimals(currentAssets.toDouble() / currentLiabilities.toDouble())
         }
 
         fun calcDebtToEquity(totalDebt: Long, totalEquity: Long): Double {
+            if(totalEquity == 0L) return Double.POSITIVE_INFINITY
             return roundToNDecimals(totalDebt.toDouble() / totalEquity.toDouble())
         }
 
         fun calcRoA(netIncome: Long, totalAssets: Long): Double {
+            if(totalAssets == 0L) return Double.POSITIVE_INFINITY
             return roundToNDecimals(netIncome.toDouble() / totalAssets.toDouble())
         }
 
         fun calcRoE(netIncome: Long, totalEquity: Long): Double {
+            if(totalEquity == 0L) return Double.POSITIVE_INFINITY
             return roundToNDecimals(netIncome.toDouble() / totalEquity.toDouble())
         }
 
         fun calcRoIC(ebit: Long, totalAssets: Long, currentLiabilities: Long): Double {
+            if(ebit == 0L) return Double.POSITIVE_INFINITY
             return roundToNDecimals(ebit.toDouble() / (totalAssets.toDouble() + currentLiabilities.toDouble()))
         }
 
         fun calcPE(price: Double, netIncome: Long): Double {
+            if(netIncome == 0L) return Double.POSITIVE_INFINITY
             return roundToNDecimals(price / netIncome.toDouble())
         }
 
         fun calcEVEBIT(ev: Long, ebit: Long): Double {
+            if(ebit == 0L) return Double.POSITIVE_INFINITY
             return roundToNDecimals(ev.toDouble() / ebit.toDouble())
         }
 
         fun calcEVFCFF(ev: Long, fcff: Long): Double {
+            if(fcff == 0L) return Double.POSITIVE_INFINITY
             return roundToNDecimals(ev.toDouble() / fcff.toDouble())
         }
 
         fun calcTaxRate(netIncome: Long, incomeTax: Long): Double {
+            if(netIncome == 0L) return Double.POSITIVE_INFINITY
             return roundToNDecimals(incomeTax.toDouble() / netIncome.toDouble())
         }
 
